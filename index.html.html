@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bienvivir · Prototipo</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5FAF8;--card:#fff;--tinta:#17302C;--mut:#4A625D;--line:#CFE0DA;--pri:#17463F;--onpri:#fff;--hoja:#2F7D52;--menta:#E3F1EC;--mango:#F2A93B;--ontan:#17302C;--r:14px;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0F1F1C;--card:#172B27;--tinta:#E8F3EF;--mut:#A7C2BA;--line:#2B4640;--pri:#2C7F63;--hoja:#6FCF9B;--menta:#1C3530}}
+:root[data-theme=dark]{--bg:#0F1F1C;--card:#172B27;--tinta:#E8F3EF;--mut:#A7C2BA;--line:#2B4640;--pri:#2C7F63;--hoja:#6FCF9B;--menta:#1C3530}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tinta);font:400 17px/1.55 "Atkinson Hyperlegible",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800}h2{font-size:1.5rem;font-weight:800}h3{font-size:1.15rem;font-weight:600}
+a{color:inherit}:focus-visible{outline:3px solid var(--mango);outline-offset:2px}
+header{background:var(--pri);color:var(--onpri);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;padding:12px 24px;position:sticky;top:0;z-index:5}
+.logo{font:800 1.3rem "Bricolage Grotesque",sans-serif;text-decoration:none;display:flex;gap:8px;align-items:center}
+nav{display:flex;gap:4px;flex:1;overflow-x:auto}nav a{padding:10px 14px;border-radius:99px;text-decoration:none;white-space:nowrap}nav a[aria-current=page]{background:rgba(255,255,255,.18);font-weight:700}
+main{max-width:1040px;margin:0 auto;padding:28px 24px 64px}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;min-height:44px;padding:0 20px;border-radius:99px;border:2px solid transparent;font:700 1rem inherit;font-family:inherit;cursor:pointer;text-decoration:none;background:var(--mango);color:var(--ontan)}
+.btn.o{background:none;border-color:var(--hoja);color:var(--hoja)}.btn.d{background:none;border-color:#B3402E;color:#B3402E}
+.hero{background:var(--menta);border-radius:28px;padding:clamp(24px,5vw,56px);margin-bottom:32px}
+.hero p{max-width:52ch;color:var(--mut)}
+.sb{display:flex;gap:8px;background:var(--card);border:2px solid var(--line);border-radius:99px;padding:6px;max-width:620px}
+.sb input{flex:1;border:0;background:none;font:inherit;color:inherit;padding:0 14px;min-width:0}.sb input:focus{outline:0}.sb:focus-within{border-color:var(--hoja)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.chip{min-height:44px;padding:0 16px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:inherit;font:inherit;cursor:pointer}.chip[aria-pressed=true]{background:var(--pri);border-color:var(--pri);color:var(--onpri)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:8px}
+.card .top{display:flex;justify-content:space-between;align-items:start;gap:8px}
+.tag{font-size:.85rem;color:var(--hoja);font-weight:700}.meta{font-size:.9rem;color:var(--mut)}
+.fav{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:none;color:var(--hoja);cursor:pointer;display:grid;place-items:center}.fav[aria-pressed=true]{background:var(--hoja);color:var(--card);border-color:var(--hoja)}.fav[aria-pressed=true] svg{fill:currentColor}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:12px 0}
+label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:.95rem}
+select,input[type=email],input[type=password],input[type=text]{min-height:44px;padding:0 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:inherit;font:inherit}
+.note{border-left:5px solid var(--mango);background:var(--card);padding:12px 16px;border-radius:0 var(--r) var(--r) 0;font-size:.95rem}
+.empty{text-align:center;padding:40px 16px;border:2px dashed var(--line);border-radius:var(--r)}
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.hb{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line)}.hb b{flex:1;min-width:160px}
+.dots{display:flex;gap:6px}.dots i{width:14px;height:14px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--hoja)}
+.sw{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+dialog{border:0;border-radius:20px;max-width:440px;background:var(--card);color:var(--tinta);padding:24px}dialog::backdrop{background:rgba(0,0,0,.5)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(24px + env(safe-area-inset-bottom,0px));background:var(--tinta);color:var(--bg);padding:12px 20px;border-radius:99px;display:none;z-index:9}
+ol.src{padding-left:20px;color:var(--mut)}
+@media(max-width:560px){header{padding:10px 16px}main{padding:20px 16px 48px}}
+@media(prefers-reduced-motion:no-preference){main>*{animation:in .25s ease-out}@keyframes in{from{opacity:0}}}
+</style></head><body>
+<header><a class="logo" href="#inicio"><svg class="i" viewBox="0 0 24 24"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14"/><path d="M5 19c2-5 5-8 9-10"/></svg>Bienvivir</a>
+<nav aria-label="Principal"><a href="#inicio" data-n="inicio">Inicio</a><a href="#explorar" data-n="explorar">Explorar</a><a href="#espacio" data-n="espacio">Mi espacio</a></nav>
+<a id="acc" class="btn" href="#ingreso">Ingresar</a></header>
+<main id="app"></main><div id="toast" role="status" aria-live="polite"></div>
+<dialog id="dlg" aria-labelledby="dt"><h3 id="dt">¿Eliminar tus datos?</h3><p>Se borrarán de forma permanente tu perfil, tus preferencias, tus favoritos y tus registros de hábitos. Los artículos públicos no cambian.</p><div class="row"><button class="btn d" data-act="delok">Sí, eliminar todo</button><button class="btn o" data-act="delno">Cancelar</button></div></dialog>
+<script>
+const P={search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',heart:'<path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',check:'<path d="m5 12 5 5 9-10"/>',shield:'<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6z"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+const A=[{id:1,t:'Desayunos con proteína en 10 minutos',c:'Alimentación',m:10,l:'Fácil',s:'Tres ideas rápidas para empezar el día con energía sin cocinar mucho.'},{id:2,t:'Caminata diaria: cómo empezar',c:'Actividad física',m:20,l:'Fácil',s:'Una guía gradual para sumar pasos a tu rutina sin sobrecargarte.'},{id:3,t:'Rutina para dormir mejor',c:'Descanso',m:15,l:'Fácil',s:'Pequeños cambios en la hora previa a acostarte.'},{id:4,t:'Estiramientos para quienes trabajan sentados',c:'Actividad física',m:10,l:'Fácil',s:'Cinco movimientos para hacer en tu escritorio.'},{id:5,t:'Cómo armar un plato balanceado',c:'Alimentación',m:15,l:'Intermedio',s:'Proporciones sencillas para organizar tus comidas.'},{id:6,t:'Pausas activas para manejar el estrés',c:'Bienestar',m:10,l:'Fácil',s:'Respiración y pausas breves durante la jornada.'}];
+const CATS=['Todos','Alimentación','Actividad física','Descanso','Bienestar'];
+const S={u:null,fav:new Set(),q:'',cat:'Todos',tm:0,lv:'',cur:1,tab:'fav',pend:null,pers:true,why:false,mode:'reg',h:[{n:'Caminar 20 minutos',d:[1,1,0,1,0,0,0]},{n:'Tomar agua al despertar',d:[1,1,1,0,1,0,0]}]};
+const $=s=>document.querySelector(s),app=$('#app');
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(t._);t._=setTimeout(()=>t.style.display='none',2600)};
+const card=a=>`<article class="card"><div class="top"><span class="tag">${a.c}</span><button class="fav" data-act="fav" data-id="${a.id}" aria-pressed="${S.fav.has(a.id)}" aria-label="${S.fav.has(a.id)?'Quitar de favoritos':'Guardar en favoritos'}: ${a.t}">${ic('heart')}</button></div><h3><a href="#detalle" data-act="open" data-id="${a.id}">${a.t}</a></h3><p style="margin:0">${a.s}</p><span class="meta">${a.m} min · ${a.l}</span></article>`;
+const V={
+inicio(){const rec=S.u&&S.pers?[A[1],A[2],A[5]]:[A[0],A[1],A[2]];
+return `<section class="hero"><h1>¿Qué quieres cuidar hoy?</h1><p>Recomendaciones claras sobre alimentación, movimiento y descanso, revisadas por un equipo editorial. No necesitas cuenta para leerlas.</p>
+<form class="sb" role="search" data-act="search"><label style="flex:1"><span class="sr" style="position:absolute;left:-9999px">Buscar recomendaciones</span><input id="q" type="text" placeholder="Prueba con “dormir” o “caminar”"></label><button class="btn">${ic('search')}Buscar</button></form>
+<div class="chips" role="group" aria-label="Temas">${CATS.slice(1).map(c=>`<button class="chip" data-act="topic" data-c="${c}">${c}</button>`).join('')}</div></section>
+<h2>${S.u&&S.pers?'Recomendado para ti':'Para empezar'}</h2><p class="meta">${S.u&&S.pers?'Según tus temas de interés. ':'Selección general del equipo editorial. '}${S.u&&S.pers?'<button class="chip" data-act="why" aria-expanded="'+S.why+'">¿Por qué veo esto?</button>':''}</p>
+${S.why?'<p class="note">Estas sugerencias combinan los temas que elegiste en tu perfil con contenido general. Puedes cambiarlas o desactivarlas en <a href="#espacio" data-act="tab" data-t="priv">Privacidad</a>.</p>':''}
+<div class="grid">${rec.map(card).join('')}</div>
+<p class="note" style="margin-top:28px">${ic('info')} Este sitio ofrece orientación general. No reemplaza la consulta con un profesional de la salud.</p>`},
+explorar(){const r=A.filter(a=>(S.cat=='Todos'||a.c==S.cat)&&(!S.tm||a.m<=S.tm)&&(!S.lv||a.l==S.lv)&&(!S.q||(a.t+a.s+a.c).toLowerCase().includes(S.q.toLowerCase())));
+return `<h1 style="font-size:2rem">Explorar</h1><form class="sb" role="search" data-act="search2"><label style="flex:1"><span style="position:absolute;left:-9999px">Buscar</span><input id="q" type="text" value="${S.q}" placeholder="Buscar por palabra clave"></label><button class="btn">${ic('search')}Buscar</button></form>
+<div class="chips" role="group" aria-label="Categoría">${CATS.map(c=>`<button class="chip" data-act="cat" data-c="${c}" aria-pressed="${S.cat==c}">${c}</button>`).join('')}</div>
+<div class="row"><label>Duración<select id="tm"><option value="0">Cualquiera</option><option value="10" ${S.tm==10?'selected':''}>Hasta 10 min</option><option value="20" ${S.tm==20?'selected':''}>Hasta 20 min</option></select></label>
+<label>Nivel<select id="lv"><option value="">Cualquiera</option><option ${S.lv=='Fácil'?'selected':''}>Fácil</option><option ${S.lv=='Intermedio'?'selected':''}>Intermedio</option></select></label><button class="btn o" data-act="clear">Limpiar filtros</button></div>
+<p class="meta" aria-live="polite">${r.length} ${r.length==1?'resultado':'resultados'}${S.q?` para “${S.q}”`:''}</p>
+${r.length?`<div class="grid">${r.map(card).join('')}</div>`:`<div class="empty"><h3>No encontramos coincidencias</h3><p>Prueba con otra palabra o quita algún filtro.</p><button class="btn" data-act="clear">Limpiar filtros</button></div>`}`},
+detalle(){const a=A.find(x=>x.id==S.cur);const f=S.fav.has(a.id);
+return `<p><a href="#explorar">← Volver a resultados</a></p><span class="tag">${a.c}</span><h1 style="font-size:2.2rem">${a.t}</h1>
+<p class="meta">${a.m} min · ${a.l} · Autor: equipo editorial · Revisado el 12 de octubre de 2026 por Dra. M. Rojas</p>
+<div class="row"><button class="btn ${f?'':'o'}" data-act="fav" data-id="${a.id}" aria-pressed="${f}">${ic('heart')}${f?'Guardado':'Guardar en favoritos'}</button></div>
+<div style="max-width:68ch"><p>${a.s}</p><p>Empieza con cambios pequeños y constantes. Si algo no te funciona, ajusta el ritmo: no hay una forma única de hacerlo.</p><h2>Qué puedes hacer</h2><p>Elige una acción de este artículo y pruébala durante una semana. Después decide si quieres mantenerla.</p>
+<p class="note">${ic('info')} Orientación general para personas adultas. Si tienes una condición de salud, consulta primero con un profesional.</p><h3 style="margin-top:24px">Fuentes</h3><ol class="src"><li>Organización Mundial de la Salud. Recomendaciones sobre actividad física y hábitos saludables.</li><li>Ministerio de Salud y Protección Social de Colombia. Guías alimentarias.</li></ol></div>`},
+ingreso(){const r=S.mode=='reg';
+return `<div style="max-width:440px;margin:0 auto"><h1 style="font-size:2rem">${r?'Crea tu cuenta':'Inicia sesión'}</h1>${S.pend?'<p class="note">Ingresa para guardar este contenido en tus favoritos.</p>':''}
+<div class="tabs"><button class="chip" data-act="mode" data-m="reg" aria-pressed="${r}">Registrarme</button><button class="chip" data-act="mode" data-m="in" aria-pressed="${!r}">Ya tengo cuenta</button></div>
+<form data-act="login" style="display:grid;gap:14px"><label>Correo electrónico<input type="email" required placeholder="nombre@correo.com"></label><label>Contraseña<input type="password" required minlength="8"></label>
+${r?`<fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:700">Temas de interés (opcional)</legend><div class="chips">${CATS.slice(1).map(c=>`<button type="button" class="chip" aria-pressed="false" onclick="this.setAttribute('aria-pressed',this.getAttribute('aria-pressed')!='true')">${c}</button>`).join('')}</div></fieldset><p class="meta">${ic('shield')} Solo pedimos lo necesario. No solicitamos diagnósticos. Puedes editar o borrar tus datos cuando quieras.</p>`:''}
+<button class="btn">${r?'Crear cuenta':'Entrar'}</button></form></div>`},
+espacio(){if(!S.u){return `<div class="empty"><h2>Mi espacio es privado</h2><p>Ingresa para ver tus favoritos y registrar hábitos.</p><a class="btn" href="#ingreso">Ingresar</a></div>`}
+const T=[['fav','Favoritos'],['hab','Hábitos'],['priv','Privacidad']];
+const tabs=`<h1 style="font-size:2rem">Mi espacio</h1><div class="tabs" role="group">${T.map(([k,l])=>`<button class="chip" data-act="tab" data-t="${k}" aria-pressed="${S.tab==k}">${l}</button>`).join('')}</div>`;
+if(S.tab=='fav'){const f=A.filter(a=>S.fav.has(a.id));return tabs+(f.length?`<div class="grid">${f.map(card).join('')}</div>`:`<div class="empty"><h3>Aún no tienes favoritos</h3><p>Toca el corazón en cualquier contenido para guardarlo aquí.</p><a class="btn" href="#explorar">Explorar contenidos</a></div>`)}
+if(S.tab=='hab'){const tot=S.h.reduce((s,h)=>s+h.d.filter(Boolean).length,0);return tabs+`<p class="meta" aria-live="polite">Esta semana registraste ${tot} cumplimientos. Cada paso cuenta.</p>${S.h.map((h,i)=>`<div class="hb"><b>${h.n}</b><span class="dots" aria-label="Últimos 7 días">${h.d.map(d=>`<i class="${d?'on':''}"></i>`).join('')}</span><button class="btn ${h.d[6]?'':'o'}" data-act="hoy" data-i="${i}" aria-pressed="${!!h.d[6]}">${ic('check')}${h.d[6]?'Hecho hoy':'Marcar hoy'}</button><button class="btn d" data-act="delh" data-i="${i}" aria-label="Eliminar hábito ${h.n}">Eliminar</button></div>`).join('')}<form data-act="addh" class="row"><label style="flex:1;min-width:200px">Nuevo hábito<input id="nh" type="text" placeholder="Ej.: Estirar 5 minutos" required></label><button class="btn">Agregar hábito</button></form>`}
+return tabs+`<div class="sw"><div><b>Personalizar mis recomendaciones</b><br><span class="meta">Si lo desactivas, verás solo contenido general.</span></div><button class="chip" role="switch" aria-checked="${S.pers}" data-act="pers">${S.pers?'Activada':'Desactivada'}</button></div>
+<div class="sw"><div><b>Descargar mis datos</b><br><span class="meta">Perfil, favoritos y hábitos en un archivo.</span></div><button class="btn o" data-act="down">Descargar</button></div>
+<div class="sw"><div><b>Eliminar mis datos</b><br><span class="meta">Te mostraremos qué se borra antes de confirmar.</span></div><button class="btn d" data-act="del">Eliminar</button></div>
+<p style="margin-top:20px"><button class="btn o" data-act="out">Cerrar sesión</button></p>`}};
+function render(){const h=(location.hash||'#inicio').slice(1);const v=V[h]?h:'inicio';app.innerHTML=V[v]();
+document.querySelectorAll('nav a').forEach(a=>a.toggleAttribute('aria-current',a.dataset.n==v)&&a.setAttribute('aria-current','page'));
+const ac=$('#acc');ac.textContent=S.u?'Mi cuenta':'Ingresar';ac.href=S.u?'#espacio':'#ingreso';document.title='Bienvivir · '+v;scrollTo(0,0)}
+function keep(){const y=scrollY;const q=$('#q');const v=q&&q.value;render();scrollTo(0,y);if(q&&$('#q'))$('#q').value=v}
+function toggleFav(id){if(!S.u){S.pend=id;location.hash='ingreso';return}S.fav.has(id)?(S.fav.delete(id),toast('Quitado de favoritos')):(S.fav.add(id),toast('Guardado en favoritos'));keep()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.tagName=='FORM')return;const a=b.dataset.act,id=+b.dataset.id;
+if(a=='fav')toggleFav(id);else if(a=='open'){S.cur=id}
+else if(a=='topic'){S.cat=b.dataset.c;S.q='';location.hash='explorar';render()}
+else if(a=='cat'){S.cat=b.dataset.c;keep()}
+else if(a=='clear'){S.q='';S.cat='Todos';S.tm=0;S.lv='';keep()}
+else if(a=='why'){S.why=!S.why;keep()}else if(a=='mode'){S.mode=b.dataset.m;render()}
+else if(a=='tab'){S.tab=b.dataset.t;location.hash!='#espacio'?location.hash='espacio':render()}
+else if(a=='hoy'){const h=S.h[+b.dataset.i];h.d[6]=h.d[6]?0:1;keep()}
+else if(a=='delh'){S.h.splice(+b.dataset.i,1);toast('Hábito eliminado');keep()}
+else if(a=='pers'){S.pers=!S.pers;keep()}else if(a=='down')toast('Se descargó tu archivo de datos (simulado)');
+else if(a=='del')$('#dlg').showModal();else if(a=='delno')$('#dlg').close();
+else if(a=='delok'){$('#dlg').close();S.fav.clear();S.h=[];S.u=null;S.tab='fav';toast('Tus datos fueron eliminados');location.hash='inicio';render()}
+else if(a=='out'){S.u=null;toast('Sesión cerrada');location.hash='inicio';render()}});
+document.addEventListener('change',e=>{if(e.target.id=='tm'){S.tm=+e.target.value;keep()}if(e.target.id=='lv'){S.lv=e.target.value;keep()}});
+document.addEventListener('submit',e=>{e.preventDefault();const a=e.target.dataset.act;
+if(a=='search'||a=='search2'){S.q=$('#q').value.trim();S.cat='Todos';location.hash!='#explorar'?location.hash='explorar':render()}
+else if(a=='login'){S.u={};toast('Bienvenida/o a Bienvivir');if(S.pend){S.fav.add(S.pend);S.pend=null;S.tab='fav';location.hash='espacio'}else location.hash='inicio';render()}
+else if(a=='addh'){S.h.push({n:$('#nh').value,d:[0,0,0,0,0,0,0]});toast('Hábito agregado');render()}});
+addEventListener('hashchange',render);render();
+</script></body></html>
